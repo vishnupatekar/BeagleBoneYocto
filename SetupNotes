@@ -1,0 +1,43 @@
+To Boot TFTP
+
+1. sudo apt-get install tftpd-hpa 
+2. vi /etc/default/tftpd-hpa
+
+
+service tftpd-hpa status
+service tftpd-hpa stop
+service tftpd-hpa start
+service tftpd-hpa restart
+service tftpd-hpa force-reload
+
+
+3. Setup nfs server
+sudo apt-get install nfs-kernel-server
+
+sudo vim /etc/default/nfs-kernel-server
+
+NEED_SVCGSSD=no # no is default
+
+
+4. export nfs root folder
+sudo vim /etc/export
+/home/vishnu/BBB_Yocto/nfs-rootfs 192.168.0.0/24(rw,nohide,insecure,no_subtree_check,sync)
+
+
+sudo service nfs-kernel-server restart
+
+
+
+-----------------------------------------------
+Remote displayof BBB
+on desktop install ssvnc
+sudo apt-get install ssvnc
+
+##remote login yo BBB using ssh root@192.168.0.103
+##run below command on BBB
+x11vnc -bg -o %HOME/.x11vnc.log.%VNCDISPLAY -auth /var/run/gdm/auth-for-gdm*/database -display :0 -forever
+
+##On Desktop terminal run ssvnc and enter BB ip address and set security to none.
+----------------------------------------------
+
+

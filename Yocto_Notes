@@ -1,0 +1,60 @@
+-----------------------------------------
+setup Git
+-----------------------------------------
+1. Set global username and password for Git.
+git config --global user.name Vishnu Patekar
+git config --global user.email VishnuPatekar0510@gmail.com
+
+2. Clone Git repository
+git clone https://github.com/vishnupatekar/BeagleBoneYocto
+
+
+
+--------------------------------------
+Yocto Pre-requisites for ubuntu 12.04
+--------------------------------------
+1. ~$ sudo apt-get install chrpath gawk diffstat texinfo g++
+2. ~$ sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+     build-essential chrpath libsdl1.2-dev xterm
+3. 
+~$ mkdir yocto
+~$ cd yocto
+~/yocto$ git clone -b daisy git://git.yoctoproject.org/poky.git
+
+
+-------------------------------------
+	Building yocto images
+-------------------------------------
+1. cd poky
+2. source oe-init-build-env build
+	this will change current dir to build.
+3. edit conf/local.conf, and make below changes:
+
+BB_NUMBER_THREADS ?= "4"
+PARALLEL_MAKE ?= "-j 4"
+
+MACHINE ?= "beaglebone"
+
+4. build sato image:
+bitbake core-image-sato
+
+
+-------------------------------------
+      Linux kernel stuff
+-------------------------------------
+1. to to menuconfig of your kernel use
+bitbake linux-yocto -c menuconfig
+
+2. To compile the kernel forcefully use
+bitbake linux-yocto -c compile -f
+
+3. To copy the compiled binaries to deploy folder use
+bitbake linux-yocto -c deploy -f
+
+
+------------------------------------
+References:
+------------------------------------
+1. http://www.yoctoproject.org/docs/1.6.1/yocto-project-qs/yocto-project-qs.html
+
+
